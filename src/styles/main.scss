@@ -16,7 +16,7 @@
 }
 
 body {
-  background-image: url(../assets/background.jpg);
+  background-image: url(../assets/background.webp);
   background-size:cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -33,7 +33,7 @@ body {
 html,
 body,
 body * {
-  cursor: url(../assets/cursor.png) 0 0, auto;
+  cursor: url(../assets/cursor.webp) 0 0, auto;
 }
 
 button:focus:not(:focus-visible) {
@@ -48,7 +48,7 @@ button,
 a,
 [role="button"],
 .card * {
-  cursor: url("../assets/pointer.png") 0 0, pointer;
+  cursor: url("../assets/pointer.webp") 0 0, pointer;
 }
 
 h1 {

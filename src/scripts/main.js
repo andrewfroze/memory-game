@@ -1,6 +1,6 @@
 import { createElement } from "./element-factory";
 import { Game } from "./game";
-import back from "../assets/back.png";
+import back from "../assets/back.webp";
 import { renderWinModal } from "./win-modal";
 import { renderLeaderboardModal } from "./leaderboard-modal";
 import { saveResult } from "./leaderboard";
