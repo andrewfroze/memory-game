@@ -4,18 +4,46 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
-
+  overflow: hidden;
 
 }
 
 html,
 body,
 body * {
-  cursor: url(../assets/cursor.png) 0 0 , auto;
+  cursor: url(../assets/cursor.png) 0 0, auto;
 }
 
 button,
 a,
-[role="button"] {
+[role="button"],
+.card * {
   cursor: url("../assets/pointer.png") 0 0, pointer;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center
+}
+
+.game-field {
+  display: grid;
+  width: 100%;
+  max-width: 90vh;
+  aspect-ratio: 1;
+  gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.card {
+  transition: transform .5s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  img {
+    width: 100%;
+  }
 }
