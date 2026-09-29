@@ -4,4 +4,18 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+
+
+}
+
+html,
+body,
+body * {
+  cursor: url(../assets/cursor.png) 0 0 , auto;
+}
+
+button,
+a,
+[role="button"] {
+  cursor: url("../assets/pointer.png") 0 0, pointer;
 }
