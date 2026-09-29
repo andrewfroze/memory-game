@@ -1,0 +1,19 @@
+header {
+  display: flex;
+  justify-content: space-around;
+  padding: 10px;
+
+  button {
+    padding: 12px 20px;
+    font: inherit;
+    color: var(--theme-text-color);
+    background: transparent;
+    border: 2px solid var(--theme-border-color);
+    transition: background-color .5s ease;
+
+    &:hover {
+      background: var(--theme-accent-color);
+    }
+  }
+}
+

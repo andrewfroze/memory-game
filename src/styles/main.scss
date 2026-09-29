@@ -5,16 +5,12 @@
   --theme-font-secondary: 'DM Sans', sans-serif;
 
   --theme-bg-color: #F6E7C8;
-  --theme-surface-color: #FFF4D6;
 
   --theme-primary-color: #2B2B2B;
   --theme-secondary-color: #6B4F3A;
 
-  --theme-accent-color: #D94F4F;
-  --theme-accent-secondary-color: #E9A23B;
-
-  --theme-success-color: #5E8C61;
-  --theme-error-color: #B83A3A;
+  --theme-accent-color: #d94f4f94;
+  --theme-accent-color-hover:  #b83a3a;
 
   --theme-border-color: #2B2B2B;
 }
@@ -35,6 +31,14 @@ html,
 body,
 body * {
   cursor: url(../assets/cursor.png) 0 0, auto;
+}
+
+button:focus:not(:focus-visible) {
+  outline: none;
+}
+
+button {
+  transition: back;
 }
 
 button,
