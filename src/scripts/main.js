@@ -6,6 +6,9 @@ import { renderLeaderboardModal } from "./leaderboard-modal";
 import { saveResult } from "./leaderboard";
 
 const BACK_FLIP_TIMEOUT = 700;
+let game;
+let movesElement;
+let foundElement;
 
 const header = createElement("header");
 const main = createElement("main");
@@ -14,11 +17,11 @@ const footer = createElement("footer");
 document.body.append(header, main, footer);
 
 renderHeader();
-main.append(renderNewGameField());
+startNewGame();
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function finishGame(game) {
+function finishGame() {
   if (!game.completed) {
     game.completed = true;
 
@@ -31,6 +34,8 @@ function finishGame(game) {
 }
 
 function startNewGame() {
+  game = new Game();
+  updateCounts();
   main.replaceChildren(renderNewGameField());
 }
 
@@ -53,11 +58,24 @@ function renderHeader() {
     renderLeaderboardModal();
   });
 
-  header.append(newGameButton, leaderBoardButton);
+  movesElement = createElement("label", {
+    className: "moves",
+  });
+
+  foundElement = createElement("label", {
+    className: "found",
+  });
+
+  header.append(newGameButton, movesElement, foundElement, leaderBoardButton);
+
+}
+
+function updateCounts() {
+  movesElement.textContent = `Moves: ${game.moves}`;
+  foundElement.textContent = `Found: ${game.found}`;
 }
 
 function renderNewGameField() {
-  const game = new Game();
   const gameField = createElement("section", {
     className: "game-field"
   });
@@ -106,7 +124,7 @@ function renderNewGameField() {
           cardElem.classList.add("found");
           firstCard.classList.add("found");
           if (game.found * 2 >= game.cards.length) {
-            finishGame(game);
+            finishGame();
           }
         } else {
           await sleep(BACK_FLIP_TIMEOUT); 
@@ -115,6 +133,7 @@ function renderNewGameField() {
         }
         first = undefined;
         firstCard = undefined;
+        updateCounts();
         gameField.classList.remove("blocked");
       }
     });

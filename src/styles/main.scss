@@ -22,6 +22,9 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 
   color: var(--theme-primary-color);
   font-family: var(--theme-font-primary);
@@ -55,7 +58,7 @@ h1 {
 main {
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
 }
 
 .game-field {

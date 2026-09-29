@@ -1,7 +1,12 @@
 header {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 80vh;
+  gap: 20px;
   padding: 10px;
+  align-self: center;
+  text-align: center;
 
   button {
     padding: 12px 20px;
