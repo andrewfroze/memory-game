@@ -29,6 +29,9 @@ function renderLeaderboardModal() {
 
     content.append(emptyMessage);
   } else {
+    const tableWrapper = createElement("div", {
+      className: "leaderboard-table-wrapper",
+    });
     const table = createElement("table", {
       className: "leaderboard-table",
     });
@@ -67,7 +70,8 @@ function renderLeaderboardModal() {
     });
 
     table.append(thead, tbody);
-    content.append(table);
+    tableWrapper.append(table);
+    content.append(tableWrapper);
   }
 
   const closeButton = createElement("button", {

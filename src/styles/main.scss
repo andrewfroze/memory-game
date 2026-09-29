@@ -40,10 +40,6 @@ button:focus:not(:focus-visible) {
   outline: none;
 }
 
-button {
-  transition: back;
-}
-
 button,
 a,
 [role="button"],
