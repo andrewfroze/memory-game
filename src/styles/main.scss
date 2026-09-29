@@ -65,7 +65,7 @@ main {
 
 .card {
   perspective: 1000px;
-  transition: transform .5s ease;
+  transition: transform .5s ease, filter 1s ease-in;
 
   &:hover {
     transform: scale(1.05);
@@ -118,4 +118,8 @@ main {
 
 .blocked {
   pointer-events: none;
+}
+
+.found {
+  filter: grayscale(100%);
 }

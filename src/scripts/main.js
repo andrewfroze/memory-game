@@ -4,7 +4,6 @@ import back from "../assets/back.png";
 
 let game = new Game();
 const BACK_FLIP_TIMEOUT = 700;
-let flipped = false;
 
 const header = createElement("header");
 const main = createElement("main");
