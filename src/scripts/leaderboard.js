@@ -14,7 +14,7 @@ export function saveResult(turns) {
     date: new Date().toISOString().slice(0, 10),
   });
 
-  results.sort((a, b) => a.moves - b.moves || a.date.localeCompare(b.date));
+  results.sort((a, b) => a.turns - b.turns || a.date.localeCompare(b.date));
 
   localStorage.setItem(
     LEADERBOARD_KEY,

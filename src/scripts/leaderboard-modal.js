@@ -53,7 +53,7 @@ function renderLeaderboardModal() {
 
       [
         index + 1,
-        result.moves,
+        result.turns,
         formatDate(result.date),
       ].forEach((value) => {
         row.append(
