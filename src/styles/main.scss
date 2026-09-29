@@ -1,3 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Rye&family=DM+Sans:wght@400;500;700&display=swap');
+
+:root {
+  --theme-font-primary: 'Rye', serif;
+  --theme-font-secondary: 'DM Sans', sans-serif;
+
+  --theme-bg-color: #F6E7C8;
+  --theme-surface-color: #FFF4D6;
+
+  --theme-primary-color: #2B2B2B;
+  --theme-secondary-color: #6B4F3A;
+
+  --theme-accent-color: #D94F4F;
+  --theme-accent-secondary-color: #E9A23B;
+
+  --theme-success-color: #5E8C61;
+  --theme-error-color: #B83A3A;
+
+  --theme-border-color: #2B2B2B;
+}
+
 body {
   background-image: url(../assets/background.jpg);
   background-size:cover;
@@ -6,6 +27,8 @@ body {
   background-attachment: fixed;
   overflow: hidden;
 
+  color: var(--theme-primary-color);
+  font-family: var(--theme-font-primary);
 }
 
 html,
@@ -21,6 +44,10 @@ a,
   cursor: url("../assets/pointer.png") 0 0, pointer;
 }
 
+h1 {
+  text-align: center;
+}
+
 main {
   display: flex;
   flex-direction: column;
@@ -30,13 +57,14 @@ main {
 .game-field {
   display: grid;
   width: 100%;
-  max-width: 90vh;
+  max-width: 80vh;
   aspect-ratio: 1;
   gap: 10px;
   grid-template-columns: repeat(4, 1fr);
 }
 
 .card {
+  perspective: 1000px;
   transition: transform .5s ease;
 
   &:hover {
@@ -45,5 +73,40 @@ main {
 
   img {
     width: 100%;
+  }
+
+  &__inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    transform-style: preserve-3d;
+    transition: transform .6s ease;
+  }
+
+  &--flipped &__inner {
+    transform: rotateY(180deg);
+  }
+
+  &__face,
+  &__back {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    backface-visibility: hidden;
+    --webkit-backface-visibility: hidden;
+  }
+
+  &__back {
+    transform: rotate(0deg);
+  }
+
+  &__face {
+    transform: rotateY(180deg);
   }
 }
