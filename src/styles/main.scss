@@ -115,3 +115,7 @@ main {
     transform: rotateY(180deg);
   }
 }
+
+.blocked {
+  pointer-events: none;
+}

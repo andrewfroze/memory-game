@@ -3,7 +3,8 @@ import { Game } from "./game";
 import back from "../assets/back.png";
 
 let game = new Game();
-const BACK_FLIP_TIMEOUT = 500;
+const BACK_FLIP_TIMEOUT = 700;
+let flipped = false;
 
 const header = createElement("header");
 const main = createElement("main");
@@ -51,14 +52,17 @@ game.cards.forEach((card, index) => {
     cardElem.classList.toggle("card--flipped");
   });
 
-  cardElem.addEventListener("click", async () => {
+  cardElem.addEventListener("click", async (event) => {
     if (!first) {
       first = index;
       firstCard = cardElem;
     } else {
+      gameField.classList.add("blocked");
       const result = game.checkCards(first, index);
       if (result) {
         game.found += 1;
+        cardElem.classList.add("found");
+        firstCard.classList.add("found");
       } else {
         await sleep(BACK_FLIP_TIMEOUT); 
         cardElem.classList.remove("card--flipped");
@@ -66,6 +70,7 @@ game.cards.forEach((card, index) => {
       }
       first = undefined;
       firstCard = undefined;
+      gameField.classList.remove("blocked");
     }
   });
 });
