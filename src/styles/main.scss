@@ -88,6 +88,10 @@ main {
     transform: rotateY(180deg);
   }
 
+  &--flipped {
+    pointer-events: none;
+  }
+
   &__face,
   &__back {
     position: absolute;
