@@ -73,6 +73,7 @@ main {
 
   img {
     width: 100%;
+    -webkit-user-drag: none;
   }
 
   &__inner {
