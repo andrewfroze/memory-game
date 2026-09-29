@@ -5,7 +5,7 @@ class Game {
   constructor() {
     this.cards = this.generateBoard();
     this.found = 0;
-    this.moves = 0;
+    this.turns = 0;
     this.completed = false;
   }
 

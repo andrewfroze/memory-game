@@ -6,11 +6,11 @@ export function getLeaderboard() {
   return savedLeaderBoard ? JSON.parse(savedLeaderBoard) : [];
 }
 
-export function saveResult(moves) {
+export function saveResult(turns) {
   const results = getLeaderboard();
 
   results.push({
-    moves,
+    turns,
     date: new Date().toISOString().slice(0, 10),
   });
 

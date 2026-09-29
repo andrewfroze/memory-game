@@ -25,9 +25,9 @@ function finishGame() {
   if (!game.completed) {
     game.completed = true;
 
-    saveResult(game.moves);
+    saveResult(game.turns);
 
-    renderWinModal(game.moves, () => {
+    renderWinModal(game.turns, () => {
       startNewGame();
     });
   }
@@ -51,7 +51,7 @@ function renderHeader() {
 
   const leaderBoardButton = createElement("button", {
     className: "leader-board-button",
-    textContent: "Leader Board",
+    textContent: "Leaderboard",
   });
 
   leaderBoardButton.addEventListener("click", () => {
@@ -71,8 +71,8 @@ function renderHeader() {
 }
 
 function updateCounts() {
-  movesElement.textContent = `Moves: ${game.moves}`;
-  foundElement.textContent = `Found: ${game.found}`;
+  movesElement.textContent = `Turns: ${game.turns}`;
+  foundElement.textContent = `Found: ${game.found}/8`;
 }
 
 function renderNewGameField() {
@@ -116,7 +116,7 @@ function renderNewGameField() {
         first = index;
         firstCard = cardElem;
       } else {
-        game.moves += 1;
+        game.turns += 1;
         gameField.classList.add("blocked");
         const result = game.checkCards(first, index);
         if (result) {
