@@ -48,7 +48,7 @@
     background: transparent;
     border: 2px solid var(--theme-border-color);
 
-    transition: background-color 0.5s ease;
+    transition: background-color 0.5s ease, color 0.5s ease;
 
     &:hover {
       background: var(--theme-accent-color);
@@ -58,6 +58,7 @@
       background: var(--theme-accent-color);
 
       &:hover {
+        color: #f8f3ea;
         background: var(--theme-accent-color-hover);
       }
     }
@@ -78,7 +79,6 @@
 
   &__message,
   &__score {
-    font-family: var(--theme-font-secondary);
     font-size: 1.1rem;
   }
 }
@@ -121,7 +121,7 @@
   overflow-x: auto;
   overflow-y: auto;
 
-  font-size: clamp(5px, 3cqw, 15px);
+  font-size: clamp(5px, 5cqw, 20px);
 }
 
 .leaderboard-table {
@@ -133,8 +133,7 @@
 
   th,
   td {
-    padding: 12px 8px;
-
+    padding: 12px 1cqw;
     text-align: center;
 
     border-bottom: 1px solid var(--theme-border-color);
