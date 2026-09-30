@@ -20,6 +20,14 @@ function createModal(content) {
     }
   });
 
+  dialog.addEventListener("close", () => {
+    dialog.remove();
+    document.body.classList.remove("modal-open");
+    if (activeDialog === dialog) {
+      activeDialog = undefined;
+    }
+  });
+
   return dialog;
 }
 

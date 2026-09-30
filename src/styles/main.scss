@@ -36,7 +36,7 @@ body * {
   cursor: url(../assets/cursor.webp) 0 0, auto;
 }
 
-button:focus:not(:focus-visible) {
+button:focus-visible {
   outline: none;
 }
 
@@ -60,7 +60,7 @@ main {
 .game-field {
   display: grid;
   width: 100%;
-  max-width: 80vh;
+  max-width: calc(100vh - 100px);
   aspect-ratio: 1;
   gap: 10px;
   grid-template-columns: repeat(4, 1fr);
