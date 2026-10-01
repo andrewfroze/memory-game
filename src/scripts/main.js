@@ -1,9 +1,9 @@
 import { createElement } from "./element-factory";
 import { Game } from "./game";
-import back from "../assets/back.webp";
 import { renderWinModal } from "./win-modal";
 import { renderLeaderboardModal } from "./leaderboard-modal";
 import { saveResult } from "./leaderboard";
+import { cards, back, sizes } from "./cards";
 
 const BACK_FLIP_TIMEOUT = 700;
 let game;
@@ -90,17 +90,27 @@ function renderNewGameField() {
 
     const cardInner = createElement("div", {
       className: "card__inner",
-    })
+    });
 
-    cardInner.append(createElement("img", {
+    const cardFace = createElement("img", {
       className: "card__face",
-      src: card.img,
-      alt: ""
-    }));
+      src: card.images[300],
+      srcset: sizes
+        .map((size) => `${card.images[size]} ${size}w`)
+        .join(", "),
+      sizes: "calc((min(100vw, 100vh - 100px) - 30px) / 4)",
+      alt: "",
+    });
+
+    cardInner.append(cardFace);
 
     cardInner.append(createElement("img", {
       className: "card__back",
-      src: back,
+      src: back[300],
+      srcset: sizes
+        .map((size) => `${back[size]} ${size}w`)
+        .join(", "),
+      sizes: "calc((min(100vw, 100vh - 100px) - 30px) / 4)",
       alt: "",
     }));
     
