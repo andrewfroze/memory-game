@@ -1,0 +1,27 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  align-self: center;
+  text-align: center;
+  font-size: clamp(5px, 3.3vw, 20px);
+
+  button {
+    padding: 10px clamp(3px, 1.5vw, 20px);
+    text-wrap: nowrap;
+    font: inherit;
+    color: var(--theme-text-color);
+    background: transparent;
+    border: 2px solid var(--theme-border-color);
+    transition: background-color .5s ease;
+
+    @media (hover: hover) {
+      &:hover {
+        background: var(--theme-accent-color);
+      }
+    }
+  }
+}
+

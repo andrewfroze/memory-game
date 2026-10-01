@@ -1,0 +1,137 @@
+@font-face {
+  font-family: 'Bagel Fat One';
+  src: url('../fonts/bagel-fat-one-latin-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --theme-font-primary: 'Bagel Fat One', sans-serif;
+
+  --theme-bg-color: #F6E7C8;
+
+  --theme-primary-color: #404040;
+  --theme-secondary-color: #6B4F3A;
+
+  --theme-accent-color: #d94f4f94;
+  --theme-accent-color-hover:  #b83a3a;
+
+  --theme-border-color: #2B2B2B;
+}
+
+body {
+  background-image: url(../assets/background.webp);
+  background-size:cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  color: var(--theme-primary-color);
+  font-family: var(--theme-font-primary);
+  font-size: 25px;
+}
+
+html,
+body,
+body * {
+  cursor: url(../assets/cursor.webp) 0 0, auto;
+}
+
+button:focus-visible {
+  outline: none;
+}
+
+button {
+  border-radius: 10px;
+}
+
+button,
+a,
+[role="button"],
+.card * {
+  cursor: url("../assets/pointer.webp") 0 0, pointer;
+}
+
+h1 {
+  text-align: center;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.game-field {
+  display: grid;
+  width: 100%;
+  max-width: calc(100vh - 100px);
+  aspect-ratio: 1;
+  gap: 10px;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.card {
+  perspective: 1000px;
+  transition: transform .5s ease, filter 1s ease-in;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  img {
+    width: 100%;
+    -webkit-user-drag: none;
+  }
+
+  &__inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+
+    transform-style: preserve-3d;
+    transition: transform .6s ease;
+  }
+
+  &--flipped &__inner {
+    transform: rotateY(180deg);
+  }
+
+  &--flipped {
+    pointer-events: none;
+  }
+
+  &__face,
+  &__back {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    backface-visibility: hidden;
+    --webkit-backface-visibility: hidden;
+  }
+
+  &__back {
+    transform: rotate(0deg);
+  }
+
+  &__face {
+    transform: rotateY(180deg);
+  }
+}
+
+.blocked {
+  pointer-events: none;
+}
+
+.found {
+  filter: grayscale(100%);
+}
