@@ -100,6 +100,7 @@ function renderNewGameField() {
         .join(", "),
       sizes: "calc((min(100vw, 100vh - 100px) - 30px) / 4)",
       alt: "",
+      fetchPriority: "high",
     });
 
     cardInner.append(cardFace);
@@ -112,6 +113,7 @@ function renderNewGameField() {
         .join(", "),
       sizes: "calc((min(100vw, 100vh - 100px) - 30px) / 4)",
       alt: "",
+      fetchPriority: "high",
     }));
     
     cardElem.append(cardInner);
