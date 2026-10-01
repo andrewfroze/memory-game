@@ -12,9 +12,8 @@ let foundElement;
 
 const header = createElement("header");
 const main = createElement("main");
-const footer = createElement("footer");
 
-document.body.append(header, main, footer);
+document.body.append(header, main);
 
 renderHeader();
 startNewGame();
