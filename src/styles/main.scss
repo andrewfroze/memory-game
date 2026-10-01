@@ -1,4 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One:wght@400;700&display=swap');
+@font-face {
+  font-family: 'Bagel Fat One';
+  src: url('../fonts/BagelFatOne-Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   --theme-font-primary: 'Bagel Fat One', sans-serif;
