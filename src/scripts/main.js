@@ -133,6 +133,7 @@ function renderNewGameField() {
 
       secondCard = cardElem;
       game.turns += 1;
+      updateCounts();
       gameField.classList.add("blocked");
     });
 
