@@ -69,7 +69,7 @@ main {
 .game-field {
   display: grid;
   width: 100%;
-  max-width: calc(100vh - 100px);
+  max-width: calc(100vh - 110px);
   aspect-ratio: 1;
   gap: 10px;
   grid-template-columns: repeat(4, 1fr);
@@ -77,10 +77,10 @@ main {
 
 .card {
   perspective: 1000px;
-  transition: transform .5s ease, filter 1s ease-in;
+  transition: transform .5s ease, filter .5s ease-in, scale .5s ease;
 
   &:hover {
-    transform: scale(1.05);
+    scale: 1.05;
   }
 
   img {

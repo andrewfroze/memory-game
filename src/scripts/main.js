@@ -66,7 +66,6 @@ function renderHeader() {
   });
 
   header.append(newGameButton, movesElement, foundElement, leaderBoardButton);
-
 }
 
 function updateCounts() {
@@ -81,6 +80,7 @@ function renderNewGameField() {
 
   let first;
   let firstCard;
+  let secondCard;
 
   game.cards.forEach((card, index) => {
     const cardElem = createElement("div", {
@@ -122,33 +122,54 @@ function renderNewGameField() {
       cardElem.classList.toggle("card--flipped");
     });
 
-    cardElem.addEventListener("click", async () => {
+    cardElem.addEventListener("click", () => {
+      cardElem.classList.add("card--flipped");
+
       if (first === undefined) {
         first = index;
         firstCard = cardElem;
-      } else {
-        game.turns += 1;
-        gameField.classList.add("blocked");
-        const result = game.checkCards(first, index);
-        if (result) {
-          game.found += 1;
-          cardElem.classList.add("found");
-          firstCard.classList.add("found");
-          if (game.found * 2 >= game.cards.length) {
-            finishGame();
-          }
-        } else {
-          await sleep(BACK_FLIP_TIMEOUT); 
-          cardElem.classList.remove("card--flipped");
-          firstCard.classList.remove("card--flipped");
-        }
-        first = undefined;
-        firstCard = undefined;
-        updateCounts();
-        gameField.classList.remove("blocked");
+        return;
       }
+
+      secondCard = cardElem;
+      game.turns += 1;
+      gameField.classList.add("blocked");
+    });
+
+    cardElem.addEventListener("transitionend", async (event) => {
+      if (event.propertyName !== "transform") {
+        return;
+      }
+
+      if (cardElem !== secondCard) {
+        return;
+      }
+
+      const result = game.checkCards(first, index);
+
+      if (result) {
+        game.found += 1;
+
+        cardElem.classList.add("found");
+        firstCard.classList.add("found");
+
+        if (game.found * 2 >= game.cards.length) {
+          finishGame();
+        }
+      } else {
+        await sleep(BACK_FLIP_TIMEOUT);
+
+        cardElem.classList.remove("card--flipped");
+        firstCard.classList.remove("card--flipped");
+      }
+
+      first = undefined;
+      firstCard = undefined;
+      secondCard = undefined;
+
+      updateCounts();
+      gameField.classList.remove("blocked");
     });
   });
-
   return gameField;
 }
