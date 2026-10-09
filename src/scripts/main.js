@@ -1,0 +1,210 @@
+import { createElement } from "./element-factory";
+import { Game } from "./game";
+import { loadSavedVolume } from "./sound-settings";
+import { playCardFlip, playCardsShuffleSound, setBackgroundVolume, setEffectsVolume } from "./audio";
+import { renderSoundModal } from "./sound-modal";
+import { renderWinModal } from "./win-modal";
+import { renderLeaderboardModal } from "./leaderboard-modal";
+import { saveResult } from "./leaderboard";
+import { back, sizes } from "./cards";
+import soundIcon from "../assets/sound.webp";
+import noSoundIcon from "../assets/no_sound.webp";
+
+const BACK_FLIP_TIMEOUT = 700;
+let game;
+let movesElement;
+let foundElement;
+let volume;
+
+const header = createElement("header");
+const main = createElement("main");
+
+document.body.append(header, main);
+
+renderHeader();
+startNewGame();
+
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function finishGame() {
+  if (!game.completed) {
+    game.completed = true;
+
+    saveResult(game.turns);
+
+    renderWinModal(game.turns, () => {
+      startNewGame();
+    });
+  }
+}
+
+function startNewGame() {
+  game = new Game();
+  updateCounts();
+  playCardsShuffleSound();
+  main.replaceChildren(renderNewGameField());
+}
+
+function renderHeader() {
+  const newGameButton = createElement("button", {
+    className: "new-game-button",
+    textContent: "New Game",
+  });
+
+  newGameButton.addEventListener("click", () => {
+    startNewGame();
+  });
+
+  const leaderBoardButton = createElement("button", {
+    className: "leader-board-button",
+    textContent: "Leaderboard",
+  });
+
+  leaderBoardButton.addEventListener("click", () => {
+    renderLeaderboardModal();
+  });
+
+  movesElement = createElement("label", {
+    className: "moves",
+  });
+
+  foundElement = createElement("label", {
+    className: "found",
+  });
+
+  const soundButton = createElement("button", {
+    className: "sound-button",
+  });
+
+  const settings = loadSavedVolume();
+  volume = settings.music;
+  const effects = settings.effects;
+  
+  setBackgroundVolume(volume);
+  setEffectsVolume(effects);
+
+  const soundButtonImage = createElement("img", {
+    className: "sound-button__image",
+    src:  +volume > 0 ? soundIcon : noSoundIcon,
+  });
+
+  soundButton.addEventListener("click", () => {
+    renderSoundModal({
+      updateSoundIcon: (volume) => {
+        soundButtonImage.src = volume > 0 ? soundIcon : noSoundIcon
+      }
+    });
+  });
+
+  soundButton.append(soundButtonImage);
+  header.append(newGameButton, movesElement, foundElement, leaderBoardButton, soundButton);
+}
+
+function updateCounts() {
+  movesElement.textContent = `Turns: ${game.turns}`;
+  foundElement.textContent = `Found: ${game.found}/8`;
+}
+
+function renderNewGameField() {
+  const gameField = createElement("section", {
+    className: "game-field"
+  });
+
+  let first;
+  let firstCard;
+  let secondCard;
+
+  game.cards.forEach((card, index) => {
+    const cardElem = createElement("div", {
+      className: "card",
+    });
+
+    const cardInner = createElement("div", {
+      className: "card__inner",
+    });
+
+    const cardFace = createElement("img", {
+      className: "card__face",
+      src: card.images[300],
+      srcset: sizes
+        .map((size) => `${card.images[size]} ${size}w`)
+        .join(", "),
+      sizes: "calc((min(100vw, 100vh - 100px) - 30px) / 4)",
+      alt: "",
+      fetchPriority: "high",
+    });
+
+    cardInner.append(cardFace);
+
+    cardInner.append(createElement("img", {
+      className: "card__back",
+      src: back[300],
+      srcset: sizes
+        .map((size) => `${back[size]} ${size}w`)
+        .join(", "),
+      sizes: "calc((min(100vw, 100vh - 100px) - 30px) / 4)",
+      alt: "",
+      fetchPriority: "high",
+    }));
+    
+    cardElem.append(cardInner);
+    gameField.append(cardElem);
+
+    cardElem.addEventListener("click", () => {
+      cardElem.classList.toggle("card--flipped");
+      playCardFlip();
+    });
+
+    cardElem.addEventListener("click", () => {
+      cardElem.classList.add("card--flipped");
+
+      if (first === undefined) {
+        first = index;
+        firstCard = cardElem;
+        return;
+      }
+
+      secondCard = cardElem;
+      game.turns += 1;
+      updateCounts();
+      gameField.classList.add("blocked");
+    });
+
+    cardElem.addEventListener("transitionend", async (event) => {
+      if (event.propertyName !== "transform") {
+        return;
+      }
+
+      if (cardElem !== secondCard) {
+        return;
+      }
+
+      const result = game.checkCards(first, index);
+
+      if (result) {
+        game.found += 1;
+
+        cardElem.classList.add("found");
+        firstCard.classList.add("found");
+
+        if (game.found * 2 >= game.cards.length) {
+          finishGame();
+        }
+      } else {
+        await sleep(BACK_FLIP_TIMEOUT);
+
+        cardElem.classList.remove("card--flipped");
+        firstCard.classList.remove("card--flipped");
+        playCardFlip();
+      }
+
+      first = undefined;
+      firstCard = undefined;
+      secondCard = undefined;
+
+      updateCounts();
+      gameField.classList.remove("blocked");
+    });
+  });
+  return gameField;
+}
