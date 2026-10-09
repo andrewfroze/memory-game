@@ -74,13 +74,18 @@ function renderLeaderboardModal() {
     content.append(tableWrapper);
   }
 
+  const buttons = createElement("div", {
+    className: "modal__buttons",
+  });
+
   const closeButton = createElement("button", {
     className: "modal__button",
     textContent: "Close",
   });
 
   closeButton.addEventListener("click", closeModal);
-  content.append(closeButton);
+  buttons.append(closeButton);
+  content.append(buttons);
 
   const dialog = createModal(content);
   openModal(dialog);

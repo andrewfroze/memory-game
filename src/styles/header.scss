@@ -8,18 +8,40 @@ header {
   text-align: center;
   font-size: clamp(5px, 3.3vw, 20px);
 
-  button {
+  .new-game-button,
+  .leader-board-button {
+    height: 50px;
     padding: 10px clamp(3px, 1.5vw, 20px);
     text-wrap: nowrap;
     font: inherit;
     color: var(--theme-text-color);
     background: transparent;
     border: 2px solid var(--theme-border-color);
-    transition: background-color .5s ease;
+    transition: background-color .5s ease, scale .5s ease;
+    box-shadow: 2px 2px 0 var(--theme-border-color);
 
     @media (hover: hover) {
       &:hover {
         background: var(--theme-accent-color);
+        scale: 1.1;
+      }
+    }
+  }
+
+  .sound-button {
+    height: 50px;
+    padding: 5px;
+    border: none;
+    background: transparent;
+    transition: scale .5s ease;
+    
+    &__image {
+      height: 100%;
+    }
+
+    @media (hover: hover) {
+      &:hover {
+        scale: 1.2;
       }
     }
   }

@@ -1,9 +1,12 @@
 import { createElement } from "./element-factory";
 import { Game } from "./game";
+import { renderSoundModal, loadSavedVolume } from "./sound-modal";
 import { renderWinModal } from "./win-modal";
 import { renderLeaderboardModal } from "./leaderboard-modal";
 import { saveResult } from "./leaderboard";
 import { cards, back, sizes } from "./cards";
+import soundIcon from "../assets/sound.webp";
+import noSoundIcon from "../assets/no_sound.webp";
 
 const BACK_FLIP_TIMEOUT = 700;
 let game;
@@ -65,7 +68,27 @@ function renderHeader() {
     className: "found",
   });
 
-  header.append(newGameButton, movesElement, foundElement, leaderBoardButton);
+  const soundButton = createElement("button", {
+    className: "sound-button",
+  });
+
+  const volume = loadSavedVolume();
+
+  const soundButtonImage = createElement("img", {
+    className: "sound-button__image",
+    src:  +volume > 0 ? soundIcon : noSoundIcon,
+  });
+
+  soundButton.addEventListener("click", () => {
+    renderSoundModal({
+      updateSoundIcon: (volume) => {
+        soundButtonImage.src = volume > 0 ? soundIcon : noSoundIcon
+      }
+    });
+  });
+
+  soundButton.append(soundButtonImage);
+  header.append(newGameButton, movesElement, foundElement, leaderBoardButton, soundButton);
 }
 
 function updateCounts() {
