@@ -1,7 +1,7 @@
+import { setBackgroundVolume } from "./audio";
 import { createElement } from "./element-factory";
 import { createModal, openModal, closeModal } from "./modal";
-
-const SOUND_SETTING_LOCAL_STORAGE_KEY = "memory-game-sound";
+import { loadSavedVolume, SOUND_SETTING_LOCAL_STORAGE_KEY } from "./sound-settings";
 
 function renderSoundModal({ updateSoundIcon }) {
   const content = createElement("div", {
@@ -51,17 +51,24 @@ function renderSoundModal({ updateSoundIcon }) {
     localStorage.setItem(SOUND_SETTING_LOCAL_STORAGE_KEY, soundInput.value);
     updateSoundIcon(soundInput.value);
     closeModal();
+    console.log(`Save click: ${soundInput.value}`);
+    setBackgroundVolume(soundInput.value);
   });
 
   closeButton.addEventListener("click", () => {
     closeModal();
-    updateSoundIcon(loadSavedVolume());
+    const savedVolume = loadSavedVolume();
+    updateSoundIcon(savedVolume);
+    console.log(`Close click: ${savedVolume}`);
+    setBackgroundVolume(+savedVolume);
   });
 
   soundInput.addEventListener("input", () => {
     soundValueLabel.textContent = soundInput.value;
     saveButton.disabled = false;
     updateSoundIcon(soundInput.value);
+    console.log(`Input: ${soundInput.value}`);
+    setBackgroundVolume(+soundInput.value);
   });
 
   soundInputContainer.append(soundInput, soundValueLabel);
@@ -72,8 +79,4 @@ function renderSoundModal({ updateSoundIcon }) {
   openModal(dialog);
 }
 
-function loadSavedVolume() {
-  return localStorage.getItem(SOUND_SETTING_LOCAL_STORAGE_KEY) ?? 50;
-}
-
-export { renderSoundModal, loadSavedVolume }
+export { renderSoundModal }

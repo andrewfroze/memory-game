@@ -1,10 +1,12 @@
 import { createElement } from "./element-factory";
 import { Game } from "./game";
-import { renderSoundModal, loadSavedVolume } from "./sound-modal";
+import { loadSavedVolume } from "./sound-settings";
+import { setBackgroundVolume } from "./audio";
+import { renderSoundModal } from "./sound-modal";
 import { renderWinModal } from "./win-modal";
 import { renderLeaderboardModal } from "./leaderboard-modal";
 import { saveResult } from "./leaderboard";
-import { cards, back, sizes } from "./cards";
+import { back, sizes } from "./cards";
 import soundIcon from "../assets/sound.webp";
 import noSoundIcon from "../assets/no_sound.webp";
 
@@ -12,6 +14,7 @@ const BACK_FLIP_TIMEOUT = 700;
 let game;
 let movesElement;
 let foundElement;
+let volume;
 
 const header = createElement("header");
 const main = createElement("main");
@@ -72,7 +75,10 @@ function renderHeader() {
     className: "sound-button",
   });
 
-  const volume = loadSavedVolume();
+  volume = loadSavedVolume();
+  console.log(`header: ${volume}`);
+  
+  setBackgroundVolume(volume);
 
   const soundButtonImage = createElement("img", {
     className: "sound-button__image",
