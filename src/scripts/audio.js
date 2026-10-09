@@ -1,11 +1,19 @@
 import music from "../assets/background.mp3";
+import cardFlip from "../assets/card-flip.mp3";
+import cardsShuffle from "../assets/cards-flipping.mp3";
 import { loadSavedVolume } from "./sound-settings";
 
 const backgroundMusic = new Audio(music);
+const cardsShuffleSound = new Audio(cardsShuffle);
 
 backgroundMusic.loop = true;
 
-let volume = Number(loadSavedVolume());
+const savedSettings = loadSavedVolume();
+let volume = Number(savedSettings.music);
+let effects = Number(savedSettings.effects);
+
+cardsShuffleSound.volume = effects / 100;
+
 const startEvents = ["pointerdown", "keydown"];
 
 function playBackgroundMusic() {
@@ -14,6 +22,28 @@ function playBackgroundMusic() {
   }
 
   return backgroundMusic.play();
+}
+
+function playCardFlip() {
+  if (effects === 0) {
+    return;
+  }
+  const cardFlipSound = new Audio(cardFlip);
+  cardFlipSound.volume = effects / 100;
+  return cardFlipSound.play();
+}
+
+function playCardsShuffleSound() {
+  if (effects === 0) {
+    return;
+  }
+  if (!cardsShuffleSound.paused) {
+    return;
+  }
+
+  return cardsShuffleSound.play().catch((error) => {
+    console.warn("Could not play shuffle sound:", error);
+  });;
 }
 
 function pauseBackgroundMusic() {
@@ -56,8 +86,17 @@ function setBackgroundVolume(newVolume) {
   });
 }
 
+function setEffectsVolume(newVolume) {
+  effects = Math.max(0, Math.min(100, Number(newVolume)));
+  cardsShuffleSound.volume = effects / 100;
+}
+
+
 export {
   setBackgroundVolume,
   pauseBackgroundMusic,
   playBackgroundMusic,
+  setEffectsVolume,
+  playCardFlip,
+  playCardsShuffleSound,
 };

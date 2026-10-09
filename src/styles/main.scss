@@ -37,6 +37,7 @@ button:disabled {
 
 button:disabled:hover,
 button:disabled:active {
+  scale: none;
   background: #dfd0b3;
 }
 

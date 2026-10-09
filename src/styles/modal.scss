@@ -151,6 +151,7 @@
   margin-top: 0;
 }
 
+.effects-input-container,
 .sound-input-container {
   display: flex;
   align-items: center;
@@ -160,6 +161,7 @@
   flex-wrap: wrap;
 }
 
+.effects-input,
 .sound-input {
   flex: 1;
   min-width: 100px;
@@ -173,6 +175,7 @@
   cursor: url("../assets/pointer.webp") 0 0, pointer;
 }
 
+.effects-input::-webkit-slider-thumb,
 .sound-input::-webkit-slider-thumb {
   appearance: none;
   -webkit-appearance: none;
@@ -189,7 +192,12 @@
   cursor: url("../assets/grab.webp") 14 17, pointer;
 }
 
+.effects-input-label,
 .sound-input-label {
   width: 10px;
   flex-shrink: 0;
+}
+
+h3 {
+  margin-bottom: 0;
 }

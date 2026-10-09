@@ -1,7 +1,7 @@
 import { createElement } from "./element-factory";
 import { Game } from "./game";
 import { loadSavedVolume } from "./sound-settings";
-import { setBackgroundVolume } from "./audio";
+import { playCardFlip, playCardsShuffleSound, setBackgroundVolume, setEffectsVolume } from "./audio";
 import { renderSoundModal } from "./sound-modal";
 import { renderWinModal } from "./win-modal";
 import { renderLeaderboardModal } from "./leaderboard-modal";
@@ -41,6 +41,7 @@ function finishGame() {
 function startNewGame() {
   game = new Game();
   updateCounts();
+  playCardsShuffleSound();
   main.replaceChildren(renderNewGameField());
 }
 
@@ -75,10 +76,12 @@ function renderHeader() {
     className: "sound-button",
   });
 
-  volume = loadSavedVolume();
-  console.log(`header: ${volume}`);
+  const settings = loadSavedVolume();
+  volume = settings.music;
+  const effects = settings.effects;
   
   setBackgroundVolume(volume);
+  setEffectsVolume(effects);
 
   const soundButtonImage = createElement("img", {
     className: "sound-button__image",
@@ -149,6 +152,7 @@ function renderNewGameField() {
 
     cardElem.addEventListener("click", () => {
       cardElem.classList.toggle("card--flipped");
+      playCardFlip();
     });
 
     cardElem.addEventListener("click", () => {
@@ -191,6 +195,7 @@ function renderNewGameField() {
 
         cardElem.classList.remove("card--flipped");
         firstCard.classList.remove("card--flipped");
+        playCardFlip();
       }
 
       first = undefined;
